@@ -8,8 +8,8 @@ package com.here.ptr;
 import com.here.ptr.graph.domain.Edge;
 import com.here.ptr.graph.domain.Graph;
 import com.here.ptr.graph.domain.Node;
-import java.io.BufferedInputStream;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -22,7 +22,7 @@ public class PublicTransportRoutingRunner {
     public static void main(String[] arg) {
         List<Node> nodes = new ArrayList<Node>();
         List<Edge> edges = new ArrayList<Edge>();
-        
+
         Scanner stdin = new Scanner(System.in);
         int noOfedges = 0;
         System.out.print("Enter number of edges : ");
@@ -52,11 +52,11 @@ public class PublicTransportRoutingRunner {
                     System.err.println("Invalid input, travel time must be integer" + edge);
                     continue;
                 }
-                
+
                 nodes.add(new Node(sourceNode));
                 nodes.add(new Node(distNode));
                 edges.add(new Edge(i, new Node(sourceNode), new Node(distNode), travelTime));
-                
+
             } else {
                 System.err.println("Invalid input, it be this format: <source> -> <destination>:<travel time>" + edge);
                 continue;
@@ -64,9 +64,30 @@ public class PublicTransportRoutingRunner {
 
             System.out.println(edge);
         }
-        
-         Graph graph = new Graph(nodes, edges);
-         PublicTransportRouting ptr = new PublicTransportRouting(graph);
+
+        Graph graph = new Graph(nodes, edges);
+        PublicTransportRouting ptr = new PublicTransportRouting(graph);
+        if (nodes.size() > 0 && edges.size() > 0) {
+            System.out.print("Enter query  (like, route <source -> destination) : ");
+            Scanner queryStrSdtin = new Scanner(System.in);
+            String queryStr = queryStrSdtin.nextLine();
+            if (queryStr.contains("route") && queryStr.contains("->")) {
+                String source = queryStr.split("\\s+")[1].split("->")[0];
+                String target = queryStr.split("\\s+")[1].split("->")[1];
+                System.out.println(source +" ,"+target);
+                ptr.runSrearch(new Node(source));
+                LinkedList<Node> path = ptr.getPath(new Node(target));
+                
+                for(Node node: path){
+                    System.out.println(node);
+                }
+            } else {
+                System.out.println("Query format invalid : " + queryStr);
+            }
+        }
+
+        //String test = "route   A -> B ";
+        //System.out.println(test.split("\\s+")[0]);
     }
 
 }
