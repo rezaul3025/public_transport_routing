@@ -50,6 +50,39 @@ public class PublicTransportRouting {
         }
     }
 
+    public LinkedList<Node> getShortestPath(Node target) {
+        LinkedList<Node> path = new LinkedList<Node>();
+        Node step = target;
+        // check if a path exists
+        if (predecessors.get(step) == null) {
+            return null;
+        }
+        path.add(step);
+        while (predecessors.get(step) != null) {
+            step = predecessors.get(step);
+            path.add(step);
+        }
+        // Put it into the correct order
+        Collections.reverse(path);
+        return path;
+    }
+
+    public String getFormattedPath(LinkedList<Node> shortestPath, Node destination) {
+        List<String> paths = new ArrayList<String>();
+
+        String formattedPath = "No path found";
+
+        if (shortestPath != null) {
+            for (Node node : shortestPath) {
+                paths.add(node.getName());
+            }
+            
+            formattedPath = String.join("->", paths)+":"+getShortestDistance(destination);
+        }
+
+        return formattedPath;
+    }
+
     private Node getMinimum(Set<Node> nodes) {
         Node minimum = null;
         for (Node node : nodes) {
@@ -108,22 +141,5 @@ public class PublicTransportRouting {
 
     private boolean isSettled(Node node) {
         return settledNodes.contains(node);
-    }
-
-    public LinkedList<Node> getPath(Node target) {
-        LinkedList<Node> path = new LinkedList<Node>();
-        Node step = target;
-        // check if a path exists
-        if (predecessors.get(step) == null) {
-            return null;
-        }
-        path.add(step);
-        while (predecessors.get(step) != null) {
-            step = predecessors.get(step);
-            path.add(step);
-        }
-        // Put it into the correct order
-        Collections.reverse(path);
-        return path;
     }
 }

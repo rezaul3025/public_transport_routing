@@ -42,16 +42,31 @@ public class PublicTransportRoutingTest {
 
     @Before
     public void setUp() {
+
         nodes = new ArrayList<Node>();
         edges = new ArrayList<Edge>();
 
         //Add all nodes
-        for (int i = 0; i < 11; i++) {
+        /*for (int i = 0; i < 11; i++) {
             Node node = new Node("Node_" + i);
             nodes.add(node);
+        }*/
+        String[] testDataArr = {"A -> B: 240", "A -> C: 70", "A -> D: 120", "C -> B: 60", "D -> E: 480", "C -> E: 240",
+            "B -> E: 210", "E -> A: 300"};
+
+        int edgeId = 1;
+        for (String testData : testDataArr) {
+            Node sourceNode = new Node(testData.split("->")[0].trim());
+            Node distNode = new Node(testData.split("->")[1].split(":")[0].trim());
+            nodes.add(sourceNode);
+            nodes.add(sourceNode);
+            Edge edge = new Edge(edgeId, sourceNode, distNode, Integer.valueOf(testData.split("->")[1].split(":")[1].trim()));
+            edges.add(edge);
+            edgeId++;
         }
 
-        addEdge(0, 0, 1, 85);
+
+        /* addEdge(0, 0, 1, 85);
         addEdge(1, 0, 2, 217);
         addEdge(2, 0, 4, 173);
         addEdge(3, 2, 6, 186);
@@ -62,7 +77,7 @@ public class PublicTransportRoutingTest {
         addEdge(8, 7, 9, 167);
         addEdge(9, 4, 9, 502);
         addEdge(10, 9, 10, 40);
-        addEdge(11, 1, 10, 600);
+        addEdge(11, 1, 10, 600);*/
     }
 
     @After
@@ -70,18 +85,16 @@ public class PublicTransportRoutingTest {
     }
 
     @Test
-    public void testSomeMethod() {
+    public void testResult() {
         Graph graph = new Graph(nodes, edges);
         PublicTransportRouting ptr = new PublicTransportRouting(graph);
-        ptr.runSrearch(nodes.get(0));
-        LinkedList<Node> path = ptr.getPath(nodes.get(10));
+        ptr.runSrearch(new Node("A"));
+        LinkedList<Node> paths = ptr.getShortestPath(new Node("B"));
 
-        assertNotNull(path);
-        assertTrue(path.size() > 0);
+        assertNotNull(paths);
+        assertTrue(paths.size() > 0);
 
-        for (Node node : path) {
-            System.out.println(node);
-        }
+        System.out.println("Shortest route is "+ptr.getFormattedPath(paths, new Node("B")));
     }
 
     private void addEdge(int edgeId, int sourceNodeLocNo, int destNodeLocNo,

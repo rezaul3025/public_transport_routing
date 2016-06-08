@@ -52,7 +52,6 @@ public class PublicTransportRoutingRunner {
                     travelTime = Integer.parseInt(edge.split(":")[1]);
                 } catch (NumberFormatException npe) {
                     System.err.println("Invalid input, travel time must be integer" + edge);
-                    continue;
                 }
 
                 nodes.add(new Node(sourceNode));
@@ -61,10 +60,9 @@ public class PublicTransportRoutingRunner {
 
             } else {
                 System.err.println("Invalid input, it be this format: <source> -> <destination>:<travel time>" + edge);
-                continue;
             }
 
-            System.out.println(edge);
+            //System.out.println(edge);
             //stdinEdge.close();
         }
 
@@ -77,28 +75,15 @@ public class PublicTransportRoutingRunner {
             if (queryStr.contains("route") && queryStr.contains("->")) {
                 String source = queryStr.split("\\s+")[1].split("->")[0];
                 String target = queryStr.split("\\s+")[1].split("->")[1];
-                System.out.println(source +" ,"+target);
+                //System.out.println(source +" ,"+target);
                 ptr.runSrearch(new Node(source));
-                LinkedList<Node> path = ptr.getPath(new Node(target));
-                
-                int totalShortestTravelTime = 0;
-                
-                for(Node node: path){
-                    System.out.println(node);
-                    //totalShortestTravelTime +=node
-                }
-                System.out.println("dis:"+ptr.getShortestDistance(new Node(target)));
-                
+                LinkedList<Node> paths = ptr.getShortestPath(new Node(target));
+               
+                System.out.println("Shortest route is "+ptr.getFormattedPath(paths, new Node(target)));
                 
             } else {
                 System.out.println("Query format invalid : " + queryStr);
             }
-            
-           // queryStrSdtin.close();
         }
-
-        //String test = "route   A -> B ";
-        //System.out.println(test.split("\\s+")[0]);
     }
-
 }
