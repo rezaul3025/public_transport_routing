@@ -23,7 +23,6 @@ import java.util.Set;
  */
 public class PublicTransportRouting {
 
-    private Map<String, Integer> transportGraph = new HashMap<String, Integer>();
     private final List<Node> nodes;
     private final List<Edge> edges;
     private Set<Node> settledNodes;
@@ -98,7 +97,7 @@ public class PublicTransportRouting {
         return neighbors;
     }
 
-    private int getShortestDistance(Node destination) {
+    public int getShortestDistance(Node destination) {
         Integer d = distance.get(destination);
         if (d == null) {
             return Integer.MAX_VALUE;
@@ -109,14 +108,6 @@ public class PublicTransportRouting {
 
     private boolean isSettled(Node node) {
         return settledNodes.contains(node);
-    }
-
-    public void findGivenRoute() {
-
-    }
-
-    public Map<String, Integer> getTransportGraph() {
-        return transportGraph;
     }
 
     public LinkedList<Node> getPath(Node target) {
