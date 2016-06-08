@@ -11,23 +11,23 @@ package com.here.ptr.graph.domain;
  */
 public class Edge {
 
-    private String id;
+    private int id;
     private Node source;
     private Node destination;
     private int weight;
 
-    public Edge(String id, Node source, Node destination, int weight) {
+    public Edge(int id, Node source, Node destination, int weight) {
         this.id = id;
         this.source = source;
         this.destination = destination;
         this.weight = weight;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
