@@ -32,10 +32,10 @@ public class PublicTransportRoutingRunner {
         } catch (java.util.InputMismatchException ex) {
             System.err.println("Invalid input : " + ex);
         }
-        
-       // stdin.close();
 
+        // stdin.close();
         for (int i = 0; i < noOfedges; i++) {
+            System.out.println("For exit please, type E");
             System.out.print("Enter the edge (like, <source> -> <destination>:<travel time>) : ");
             Scanner stdinEdge = new Scanner(System.in);
             String edge = stdinEdge.nextLine();
@@ -59,7 +59,7 @@ public class PublicTransportRoutingRunner {
                 edges.add(new Edge(i, new Node(sourceNode), new Node(distNode), travelTime));
 
             } else {
-                System.err.println("Invalid input, it be this format: <source> -> <destination>:<travel time>" + edge);
+                System.err.println("Invalid input, it must be this format: <source> -> <destination>:<travel time>" + edge);
             }
 
             //System.out.println(edge);
@@ -78,9 +78,9 @@ public class PublicTransportRoutingRunner {
                 //System.out.println(source +" ,"+target);
                 ptr.runSrearch(new Node(source));
                 LinkedList<Node> paths = ptr.getShortestPath(new Node(target));
-               
-                System.out.println("Shortest route is "+ptr.getFormattedPath(paths, new Node(target)));
-                
+
+                System.out.println("Shortest route is " + ptr.getFormattedPath(paths, new Node(target)));
+
             } else {
                 System.out.println("Query format invalid : " + queryStr);
             }
