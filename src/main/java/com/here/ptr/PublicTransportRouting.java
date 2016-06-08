@@ -82,6 +82,17 @@ public class PublicTransportRouting {
 
         return formattedPath;
     }
+    
+    public List<Node> getNeighbors(Node node) {
+        List<Node> neighbors = new ArrayList<Node>();
+        for (Edge edge : edges) {
+            if (edge.getSource().equals(node)
+                    && !isSettled(edge.getDestination())) {
+                neighbors.add(edge.getDestination());
+            }
+        }
+        return neighbors;
+    }
 
     private Node getMinimum(Set<Node> nodes) {
         Node minimum = null;
@@ -118,18 +129,7 @@ public class PublicTransportRouting {
         }
         throw new RuntimeException("Should not happen");
     }
-
-    private List<Node> getNeighbors(Node node) {
-        List<Node> neighbors = new ArrayList<Node>();
-        for (Edge edge : edges) {
-            if (edge.getSource().equals(node)
-                    && !isSettled(edge.getDestination())) {
-                neighbors.add(edge.getDestination());
-            }
-        }
-        return neighbors;
-    }
-
+    
     public int getShortestDistance(Node destination) {
         Integer d = distance.get(destination);
         if (d == null) {

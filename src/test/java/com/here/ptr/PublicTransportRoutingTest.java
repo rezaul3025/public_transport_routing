@@ -93,8 +93,14 @@ public class PublicTransportRoutingTest {
 
         assertNotNull(paths);
         assertTrue(paths.size() > 0);
+        
+        for(Node node: ptr.getNeighbors(new Node("A"))){
+            System.out.println("node"+node.getName());
+        }
 
         System.out.println("Shortest route is "+ptr.getFormattedPath(paths, new Node("B")));
+        
+        
     }
 
     private void addEdge(int edgeId, int sourceNodeLocNo, int destNodeLocNo,
