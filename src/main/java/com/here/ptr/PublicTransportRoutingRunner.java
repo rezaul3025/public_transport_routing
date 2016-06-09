@@ -91,7 +91,11 @@ public class PublicTransportRoutingRunner {
             if (queryStrNearBy.contains("nearby") && queryStrNearBy.contains(",") && queryStrNearBy.split("\\s+").length == 2) {
                 String source = queryStrNearBy.split("\\s+")[1].split(",")[0];
                 String time = queryStrNearBy.split("\\s+")[1].split(",")[1];
-                System.out.println("Nearby routes are "+String.join(",", ptr.getNearByStations(new Station(source), Integer.valueOf(time))));
+                
+                String nearByStationsStr = String.join(",", ptr.getNearByStations(new Station(source), Integer.valueOf(time)));
+                nearByStationsStr = !nearByStationsStr.isEmpty()?nearByStationsStr:" : No nearby stations found";
+                
+                System.out.println("Nearby routes are "+nearByStationsStr);
                 
             } else {
                 System.out.println("Query format invalid : " + queryStr);

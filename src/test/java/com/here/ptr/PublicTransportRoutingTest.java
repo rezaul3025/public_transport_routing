@@ -80,7 +80,9 @@ public class PublicTransportRoutingTest {
         List<String> nearByStations = ptr.getNearByStations(new Station("A"), 130);
         assertNotNull(nearByStations);
         assertTrue(nearByStations.size() > 0);
-        System.out.println("Nearby routes are " + String.join(",", nearByStations));
+        String nearByStationsStr = String.join(",", nearByStations);
+        nearByStationsStr = !nearByStationsStr.isEmpty()?nearByStationsStr:" : No nearby stations found";
+        System.out.println("Nearby routes are "+nearByStationsStr );
 
     }
 
