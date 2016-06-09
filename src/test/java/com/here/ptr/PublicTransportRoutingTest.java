@@ -7,7 +7,7 @@ package com.here.ptr;
 
 import com.here.ptr.graph.domain.Edge;
 import com.here.ptr.graph.domain.Graph;
-import com.here.ptr.graph.domain.Node;
+import com.here.ptr.graph.domain.Station;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -26,7 +26,7 @@ public class PublicTransportRoutingTest {
 
     private PublicTransportRouting testRouteGraph;
 
-    private List<Node> nodes;
+    private List<Station> stations;
     private List<Edge> edges;
 
     public PublicTransportRoutingTest() {
@@ -43,41 +43,22 @@ public class PublicTransportRoutingTest {
     @Before
     public void setUp() {
 
-        nodes = new ArrayList<Node>();
+        stations = new ArrayList<Station>();
         edges = new ArrayList<Edge>();
 
-        //Add all nodes
-        /*for (int i = 0; i < 11; i++) {
-            Node node = new Node("Node_" + i);
-            nodes.add(node);
-        }*/
         String[] testDataArr = {"A -> B: 240", "A -> C: 70", "A -> D: 120", "C -> B: 60", "D -> E: 480", "C -> E: 240",
             "B -> E: 210", "E -> A: 300"};
 
         int edgeId = 1;
         for (String testData : testDataArr) {
-            Node sourceNode = new Node(testData.split("->")[0].trim());
-            Node distNode = new Node(testData.split("->")[1].split(":")[0].trim());
-            nodes.add(sourceNode);
-            nodes.add(sourceNode);
-            Edge edge = new Edge(edgeId, sourceNode, distNode, Integer.valueOf(testData.split("->")[1].split(":")[1].trim()));
+            Station sourceStation = new Station(testData.split("->")[0].trim());
+            Station distStation = new Station(testData.split("->")[1].split(":")[0].trim());
+            stations.add(sourceStation);
+            stations.add(sourceStation);
+            Edge edge = new Edge(edgeId, sourceStation, distStation, Integer.valueOf(testData.split("->")[1].split(":")[1].trim()));
             edges.add(edge);
             edgeId++;
         }
-
-
-        /* addEdge(0, 0, 1, 85);
-        addEdge(1, 0, 2, 217);
-        addEdge(2, 0, 4, 173);
-        addEdge(3, 2, 6, 186);
-        addEdge(4, 2, 7, 103);
-        addEdge(5, 3, 7, 183);
-        addEdge(6, 5, 8, 250);
-        addEdge(7, 8, 9, 84);
-        addEdge(8, 7, 9, 167);
-        addEdge(9, 4, 9, 502);
-        addEdge(10, 9, 10, 40);
-        addEdge(11, 1, 10, 600);*/
     }
 
     @After
@@ -86,26 +67,21 @@ public class PublicTransportRoutingTest {
 
     @Test
     public void testResult() {
-        Graph graph = new Graph(nodes, edges);
+        Graph graph = new Graph(stations, edges);
         PublicTransportRouting ptr = new PublicTransportRouting(graph);
-        ptr.runSrearch(new Node("A"));
-        LinkedList<Node> paths = ptr.getShortestPath(new Node("B"));
+        ptr.runSrearch(new Station("A"));
+        LinkedList<Station> stations = ptr.getShortestRouteStations(new Station("B"));
 
-        assertNotNull(paths);
-        assertTrue(paths.size() > 0);
-        
-        for(Node node: ptr.getNeighbors(new Node("A"))){
-            System.out.println("node"+node.getName());
-        }
+        assertNotNull(stations);
+        assertTrue(stations.size() > 0);
 
-        System.out.println("Shortest route is "+ptr.getFormattedPath(paths, new Node("B")));
-        
-        
+        System.out.println("Shortest route is " + ptr.getFormattedRoute(stations, new Station("B")));
+
+        List<String> nearByStations = ptr.getNearByStations(new Station("A"), 130);
+        assertNotNull(nearByStations);
+        assertTrue(nearByStations.size() > 0);
+        System.out.println("Nearby routes are " + String.join(",", nearByStations));
+
     }
 
-    private void addEdge(int edgeId, int sourceNodeLocNo, int destNodeLocNo,
-            int duration) {
-        Edge edge = new Edge(edgeId, nodes.get(sourceNodeLocNo), nodes.get(destNodeLocNo), duration);
-        edges.add(edge);
-    }
 }

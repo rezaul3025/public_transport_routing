@@ -12,11 +12,11 @@ package com.here.ptr.graph.domain;
 public class Edge {
 
     private int id;
-    private Node source;
-    private Node destination;
+    private Station source;
+    private Station destination;
     private int weight;
 
-    public Edge(int id, Node source, Node destination, int weight) {
+    public Edge(int id, Station source, Station destination, int weight) {
         this.id = id;
         this.source = source;
         this.destination = destination;
@@ -31,19 +31,19 @@ public class Edge {
         this.id = id;
     }
 
-    public Node getSource() {
+    public Station getSource() {
         return source;
     }
 
-    public void setSource(Node source) {
+    public void setSource(Station source) {
         this.source = source;
     }
 
-    public Node getDestination() {
+    public Station getDestination() {
         return destination;
     }
 
-    public void setDestination(Node destination) {
+    public void setDestination(Station destination) {
         this.destination = destination;
     }
 

@@ -9,11 +9,11 @@ package com.here.ptr.graph.domain;
  *
  * @author rkarim
  */
-public class Node {
+public class Station {
 
     private String name;
 
-    public Node(String name) {
+    public Station(String name) {
         this.name = name;
     }
 
@@ -44,7 +44,7 @@ public class Node {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        Node other = (Node) obj;
+        Station other = (Station) obj;
         if (name == null) {
             if (other.name != null) {
                 return false;

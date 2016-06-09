@@ -12,20 +12,20 @@ import java.util.List;
  * @author rkarim
  */
 public class Graph {
-    private List<Node> nodes;
+    private List<Station> stations;
     private List<Edge> edges;
     
-    public Graph(List<Node> nodes, List<Edge> edges){
-        this.nodes = nodes;
+    public Graph(List<Station> stations, List<Edge> edges){
+        this.stations = stations;
         this.edges = edges;
     }
 
-    public List<Node> getNodes() {
-        return nodes;
+    public List<Station> getStations() {
+        return stations;
     }
 
-    public void setNodes(List<Node> nodes) {
-        this.nodes = nodes;
+    public void setStations(List<Station> stations) {
+        this.stations = stations;
     }
 
     public List<Edge> getEdges() {
@@ -35,4 +35,6 @@ public class Graph {
     public void setEdges(List<Edge> edges) {
         this.edges = edges;
     }
+
+    
 }
